@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepSeek Medical Chatbot</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f0f2f5; margin: 0; padding: 20px; display: flex; justify-content: center; }
+        .chat { width: 100%; max-width: 600px; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header { background: #28a745; color: white; padding: 15px; text-align: center; }
+        #messages { height: 400px; overflow-y: auto; padding: 15px; background: #f8f9fa; }
+        .msg { margin: 10px 0; padding: 10px; border-radius: 10px; max-width: 80%; }
+        .user { background: #007bff; color: white; margin-left: auto; }
+        .bot { background: #e9ecef; color: #333; }
+        .input { display: flex; padding: 15px; }
+        #input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        button { margin-left: 10px; padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #218838; }
+        .loading { color: #6c757d; font-style: italic; }
+    </style>
+</head>
+<body>
+    <div class="chat">
+        <div class="header">
+            <h2>🏥 DeepSeek Medical Assistant</h2>
+            <p>AWS Bedrock-Powered | 24/7 Help</p>
+        </div>
+        <div id="messages"></div>
+        <div class="input">
+            <input type="text" id="input" placeholder="Ask about health..." onkeypress="if(event.key==='Enter') send()">
+            <button onclick="send()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const messages = document.getElementById('messages');
+        const input = document.getElementById('input');
+        // UPDATE THIS WITH YOUR API ENDPOINT FROM Phase 2
+        const API_URL = 'https://rrryzcultj.execute-api.us-east-1.amazonaws.com/prod/chat';  // e.g., https://abc123.../prod/chat
+
+        function addMsg(text, isUser) {
+            const div = document.createElement('div');
+            div.className = `msg ${isUser ? 'user' : 'bot'}`;
+            div.textContent = text;
+            messages.appendChild(div);
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        async function send() {
+            const q = input.value.trim();
+            if (!q) return;
+            addMsg(q, true);
+            input.value = '';
+            addMsg('Thinking...', false);
+
+            try {
+                const res = await fetch(`${API_URL}?q=${encodeURIComponent(q)}`);
+                const data = await res.json();
+                // Remove loading
+                messages.removeChild(messages.lastChild);
+                addMsg(data.reply || 'Error: No response', false);
+            } catch (e) {
+                messages.removeChild(messages.lastChild);
+                addMsg(`Error: ${e.message}. Check API?`, false);
+            }
+        }
+
+        // Welcome
+        addMsg('Hi! Ask me medical questions (e.g., "Headache remedies?"). Powered by DeepSeek-R1.', false);
+    </script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-deepseekchatbot-dev-154bc-authRole",
+      "UnauthRoleArn": "arn:aws:iam::905418403618:role/amplify-deepseekchatbot-dev-154bc-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::905418403618:role/amplify-deepseekchatbot-dev-154bc-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-deepseekchatbot-dev-154bc-deployment",
+      "UnauthRoleName": "amplify-deepseekchatbot-dev-154bc-unauthRole",
+      "StackName": "amplify-deepseekchatbot-dev-154bc",
+      "StackId": "arn:aws:cloudformation:us-east-1:905418403618:stack/amplify-deepseekchatbot-dev-154bc/d3b15490-d2d0-11f0-bc92-12e5200853f9",
+      "AmplifyAppId": "d1t9u4yfkcxxb9"
+    }
+  }
+}
