@@ -3,19 +3,19 @@ import boto3
 from botocore.exceptions import ClientError
 
 bedrock = boto3.client('bedrock-runtime', region_name='us-east-1')
-MODEL_ID = "anthropic.claude-instant-v1"
+MODEL_ID = "mistral.mixtral-8x7b-instruct-v0:1"
 
 def lambda_handler(event, context):
     try:
         # Get message from frontend (query param)
         message = event['queryStringParameters']['q']
 
-        # Simple conversational format
-        prompt = f"Hello! How can I help you today?\n\nUser: {message}\n\nAssistant:"
+        # Simple prompt for Mistral
+        prompt = f"User: {message}\nAssistant:"
 
         body = {
             "prompt": prompt,
-            "max_tokens_to_sample": 1000,
+            "max_tokens": 1000,
             "temperature": 0.7,
             "top_p": 0.9
         }
@@ -28,7 +28,7 @@ def lambda_handler(event, context):
         )
 
         result = json.loads(response['body'].read())
-        reply = result['completion'].strip()
+        reply = result['outputs'][0]['text'].strip()
 
         return {
             'statusCode': 200,
