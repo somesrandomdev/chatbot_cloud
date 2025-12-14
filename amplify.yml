@@ -1,11 +1,17 @@
 version: 1
-frontend:
-  phases:
-    build:
-      commands:
-        - echo "No build required for static HTML site"
-        - ls -la
-  artifacts:
-    baseDirectory: .
-    files:
-      - '**/*'
+applications:
+  - appRoot: .
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - echo "Starting deployment"
+        build:
+          commands:
+            - echo "Static site ready"
+      artifacts:
+        baseDirectory: .
+        files:
+          - '**/*'
+      cache:
+        paths: []
