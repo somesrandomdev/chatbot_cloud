@@ -10,15 +10,14 @@ def lambda_handler(event, context):
         # Get message from frontend (query param)
         message = event['queryStringParameters']['q']
 
-        # Claude format - general helpful assistant
-        prompt = f"Human: You are a helpful assistant. Please provide a friendly and helpful response to the user.\n\nUser: {message}\n\nAssistant:"
+        # Simple conversational format
+        prompt = f"Hello! How can I help you today?\n\nUser: {message}\n\nAssistant:"
 
         body = {
             "prompt": prompt,
             "max_tokens_to_sample": 1000,
             "temperature": 0.7,
-            "top_p": 0.9,
-            "stop_sequences": ["\n\nHuman:"]
+            "top_p": 0.9
         }
 
         response = bedrock.invoke_model(
