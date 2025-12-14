@@ -1,15 +1,11 @@
 version: 1
 frontend:
   phases:
-    preBuild:
-      commands:
-        - echo "Starting pre-build phase"
     build:
       commands:
-        - echo "Build completed successfully"
+        - echo "No build required for static HTML site"
+        - ls -la
   artifacts:
     baseDirectory: .
     files:
       - '**/*'
-  cache:
-    paths: []
