@@ -1,9 +1,15 @@
 version: 1
 frontend:
   phases:
+    preBuild:
+      commands:
+        - echo "Starting pre-build phase"
     build:
-      commands: []
+      commands:
+        - echo "Build completed successfully"
   artifacts:
     baseDirectory: .
     files:
       - '**/*'
+  cache:
+    paths: []
