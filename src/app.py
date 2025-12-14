@@ -10,12 +10,12 @@ def lambda_handler(event, context):
         # Get message from frontend (query param)
         message = event['queryStringParameters']['q']
 
-        # Simple prompt for Mistral
-        prompt = f"User: {message}\nAssistant:"
+        # Very simple prompt
+        prompt = f"Hello! I'm here to chat with you. What's on your mind?\n\nUser: {message}\nAssistant:"
 
         body = {
             "prompt": prompt,
-            "max_tokens": 1000,
+            "max_tokens": 500,
             "temperature": 0.7,
             "top_p": 0.9
         }
@@ -29,6 +29,12 @@ def lambda_handler(event, context):
 
         result = json.loads(response['body'].read())
         reply = result['outputs'][0]['text'].strip()
+        
+        # Clean up the response
+        if reply.startswith('User:'):
+            reply = reply.split('Assistant:')[-1].strip()
+        if reply.startswith('Bot:'):
+            reply = reply.split('Bot:')[-1].strip()
 
         return {
             'statusCode': 200,
