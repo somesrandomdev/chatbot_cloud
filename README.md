@@ -1,3 +1,5 @@
+
+
 # AI Chat Assistant
 
 A modern, responsive AI-powered chatbot built with HTML, CSS, JavaScript, and AWS Lambda. Features a sleek UI design and integrates with Mistral AI through AWS Bedrock for natural language processing.
